@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 设置namespace：最佳实践是设置为该实体类的全包名 -->
+<mapper namespace="com.mybatis.helloworld.pojo.User">
+
+    <!-- resultMap -->
+    <resultMap id="UserType" type="com.mybatis.helloworld.pojo.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <!-- 特别注意这里
+            在User实体类中我们使用的命名是驼峰形式，默认mybatis是user属性名与db字段名一致。如果不一致，需要
+            做好映射关系，以免出现注入结果为null
+         -->
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <!-- select标签：制定查询操作 -->
+    <select id="findById" parameterType="int" resultMap="UserType">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+
+
+    <!-- insert标签：插入操作 -->
+    <insert id="add" parameterType="com.mybatis.helloworld.pojo.User">
+        INSERT INTO user
+        VALUES(null, #{name}, #{createdAt}, #{updatedAt})
+    </insert>
+
+    <!-- update标签: 更新操作 -->
+    <update id="update" parameterType="com.mybatis.helloworld.pojo.User" >
+        UPDATE user
+        SET name=#{name}, created_at=#{createdAt}, updated_at=#{updatedAt}
+        WHERE id=#{id}
+    </update>
+
+    <!-- delete标签：删除操作 -->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM user
+        WHERE id=#{id}
+    </delete>
+
+    <!-- noice:
+        1、每个标签都有一个id，是唯一标识一个操作的sqlID；
+        2、标签分为select, insert, update, delete对应crud操作；
+        这个文件必须添加到mybatis-config.xm文件中，不然根本不知道实体类如何与db进行映射
+    -->
+</mapper>
