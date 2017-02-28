@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 属性配置标签
+        1. 可以加载properties配置文件（默认加载类根路径），标签属性元素：
+            url: 一般用于远程加载，通过访问协议获取
+            resource: 加载类路径下的配置文件
+       2.但是url和resource只能同时存在一个
+    -->
+    <properties resource="jdbc.properties"/>
+
+    <typeAliases>
+        <!-- <typeAlias type="com.props.pojo.User" alias="User"/>-->
+        <!-- 使用包时，指定了mybatis的bean加载目录 -->
+        <package name="com.props.pojo" />
+    </typeAliases>
+
+    <environments default="test">
+        <environment id="test">
+
+            <transactionManager type="JDBC"></transactionManager>
+
+
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}" />
+                <property name="url" value="${db.url}" />
+                <property name="username" value="${db.username}" />
+                <property name="password" value="${db.password}" />
+                <!-- 还可以做一些连接池的配置，这里不做展开 -->
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/User.xml"/>
+    </mappers>
+
+</configuration>

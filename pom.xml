@@ -6,7 +6,13 @@
 
     <groupId>csdn</groupId>
     <artifactId>mybatis</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <modules>
+        <module>helloworld</module>
+        <module>hello-props</module>
+    </modules>
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->

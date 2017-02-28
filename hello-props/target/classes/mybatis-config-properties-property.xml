@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 属性配置标签
+        1. 可以加载properties配置文件（默认加载类根路径），标签属性元素：
+            url: 一般用于远程加载，通过访问协议获取
+            resource: 加载类路径下的配置文件
+       2.但是url和resource只能同时存在一个
+    -->
+    <properties resource="jdbc.properties">
+        <property name="db.test01" value="test01" />
+        <property name="db.test02" value="test02" />
+        <property name="db.username" value="root1" />
+        <property name="db.password" value="root2" />
+    </properties>
+
+
+</configuration>

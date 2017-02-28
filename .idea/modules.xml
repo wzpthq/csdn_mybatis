@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/csdn_mybatis.iml" filepath="$PROJECT_DIR$/csdn_mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hello-props/hello-props.iml" filepath="$PROJECT_DIR$/hello-props/hello-props.iml" />
+      <module fileurl="file://$PROJECT_DIR$/helloworld/helloworld.iml" filepath="$PROJECT_DIR$/helloworld/helloworld.iml" />
     </modules>
   </component>
 </project>

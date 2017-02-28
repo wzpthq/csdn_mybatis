@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 加载properties配置,也可以设置 -->
+    <properties resource="jdbc.properties">
+    </properties>
+    
+    <!-- 开启debug模式，方便查看sql情况 -->
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+
+    <!-- 环境配置（开发环境、测试环境、预发布环境等多套环境DB配置） -->
+    <environments default="test">
+        <!-- 每个环境对应一个environment配置 -->
+        <environment id="test">
+            <!-- 事务管理类型
+                JDBC: 使用Jdbc的事务管理机制
+                MANAGED: 容器管理，详情参考：http://www.mybatis.org/mybatis-3/zh/configuration.html#environments
+             -->
+            <transactionManager type="JDBC"></transactionManager>
+
+            <!-- 数据源：连接池方式
+                UNPOOLED: 非连接池
+                POOLED: 连接池
+                JNDI: 容器管理
+             -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${db.driver}" />
+                <property name="url" value="${db.url}" />
+                <property name="username" value="${db.username}" />
+                <property name="password" value="${db.password}" />
+                <!-- 还可以做一些连接池的配置，这里不做展开 -->
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!-- 命名需要"实体类名.xml"-->
+        <mapper resource="mapper/User.xml"/>
+    </mappers>
+    
+</configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.props.pojo.User">
+
+    <!-- 没有别名设置的情况，类型必须是全限定名
+    注意：resultType:返回类型，必须是全限定名，不然找不到类型
+    -->
+    <select id="findByIdAndNotTypeAlias" parameterType="int" resultType="com.props.pojo.User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    
+    <!-- 通过设置类别名来简化操作 -->
+    <!--
+    <select id="findByIdAndTypeAlias" parameterType="int" resultType="User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    -->
+
+    <!-- 通过设置类别名来简化操作 -->
+    <select id="findByIdAndAnnotationAlias" parameterType="int" resultType="UserAnnotation">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+
+    <!-- 使用typeHandler来处理类型问题 -->
+    <resultMap id="userMap" type="com.props.pojo.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name" />
+        <result property="createdAt" column="created_at" typeHandler="com.props.handlers.MyDateTypeHandler"
+                javaType="java.util.Date"/>
+        <result property="updatedAt" column="updated_at" typeHandler="com.props.handlers.MyDateTypeHandler"
+                javaType="java.util.Date"/>
+    </resultMap>
+    <select id="findByIdAndTypeHandler" parameterType="int" resultMap="userMap">
+         SELECT * FROM user WHERE id=#{id}
+    </select>
+
+</mapper>
