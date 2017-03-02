@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.typehandler.pojo.User1">
+
+    <insert id="add" parameterType="User1">
+        INSERT INTO user1
+        VALUES(null, #{name},
+        #{createdAt, javaType=java.util.Date, jdbcType=VARCHAR, typeHandler=com.typehandler.handlers.MyDateTypeHandler},
+        #{createdAt, javaType=java.util.Date, jdbcType=VARCHAR, typeHandler=com.typehandler.handlers.MyDateTypeHandler})
+    </insert>
+
+    <resultMap id="user1Map" type="User1">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+
+        <!-- 需要做转换的字段必须指定typeHandler -->
+        <result property="createdAt" column="created_at" typeHandler="com.typehandler.handlers.MyDateTypeHandler"/>
+        <result property="updatedAt" column="updated_at" typeHandler="com.typehandler.handlers.MyDateTypeHandler"/>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="user1Map">
+        SELECT *
+        FROM user1
+        WHERE id=#{id}
+    </select>
+
+    
+</mapper>
