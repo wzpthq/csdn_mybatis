@@ -33,7 +33,8 @@
                 javaType="java.util.Date"/>
     </resultMap>
     <select id="findByIdAndTypeHandler" parameterType="int" resultMap="userMap">
-         SELECT * FROM user WHERE id=#{id}
+        SELECT *
+        FROM user WHERE id=#{id}
     </select>
 
 </mapper>
