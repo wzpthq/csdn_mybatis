@@ -20,7 +20,7 @@
         <result property="updatedAt" column="updated_at" typeHandler="com.typehandler.handlers.MyDateTypeHandler"/>
     </resultMap>
 
-    <select id="findById" parameterType="int" resultMap="user1Map">
+    <select id="findById" parameterType="int" resultMap="user1Map" >
         SELECT *
         FROM user1
         WHERE id=#{id}
