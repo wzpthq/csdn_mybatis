@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/csdn_mybatis.iml" filepath="$PROJECT_DIR$/csdn_mybatis.iml" />
+      <module fileurl="file://$PROJECT_DIR$/hello-objectfactory/hello-objectfactory.iml" filepath="$PROJECT_DIR$/hello-objectfactory/hello-objectfactory.iml" />
       <module fileurl="file://$PROJECT_DIR$/hello-plugins/hello-plugins.iml" filepath="$PROJECT_DIR$/hello-plugins/hello-plugins.iml" />
       <module fileurl="file://$PROJECT_DIR$/hello-props/hello-props.iml" filepath="$PROJECT_DIR$/hello-props/hello-props.iml" />
       <module fileurl="file://$PROJECT_DIR$/hello-typehandler/hello-typehandler.iml" filepath="$PROJECT_DIR$/hello-typehandler/hello-typehandler.iml" />
