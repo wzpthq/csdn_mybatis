@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="hello-plugins" />
         <module name="hello-props" />
         <module name="hello-typehandler" />
         <module name="helloworld" />
@@ -29,6 +30,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="csdn_mybatis" target="1.8" />
+      <module name="hello-plugins" target="1.8" />
       <module name="hello-props" target="1.8" />
       <module name="hello-typehandler" target="1.8" />
       <module name="helloworld" target="1.8" />

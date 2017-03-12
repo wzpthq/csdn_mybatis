@@ -13,6 +13,7 @@
         <module>helloworld</module>
         <module>hello-props</module>
         <module>hello-typehandler</module>
+        <module>hello-plugins</module>
     </modules>
 
     <dependencies>
