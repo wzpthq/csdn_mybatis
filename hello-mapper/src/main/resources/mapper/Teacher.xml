@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.pojo.Teacher">
+
+    <resultMap id="teacherDtoMap" type="Teacher" >
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+        <!-- 关联关系：OneToMany -->
+        <collection property="students" ofType="Student" >
+            <id property="id" column="sid"/>
+            <result property="name" column="sname"/>
+            <result property="tid" column="tid" />
+            <result property="teacherName" column="teacher_name" />
+            <result property="createdAt" column="s_created_at" />
+            <result property="updatedAt" column="s_updated_at" />
+        </collection>
+
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="teacherDtoMap">
+        SELECT
+            teacher.id AS id,
+            teacher.name AS name,
+            teacher.created_at AS created_at,
+            teacher.updated_at AS updated_at,
+            student.id AS sid,
+            student.name AS sname,
+            student.tid AS tid,
+            student.teacher_name AS teacher_name,
+            student.created_at AS s_created_at,
+            student.updated_at AS s_updated_at
+        FROM teacher join student ON teacher.id = student.tid
+        WHERE teacher.id=#{id}
+    </select>
+
+
+</mapper>

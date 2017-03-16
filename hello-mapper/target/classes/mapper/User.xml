@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.pojo.User">
+    <!-- 解决重复引用SQL问题,使用方式就是
+        1.<sql id="sqlId">需要重复引用的SQL Fragement</sql> 可以使用EL表达式
+        2.<include refId="sqlId"></include> 引用
+    -->
+    <sql id="tableAll">
+        SELECT * FROM ${table}
+    </sql>
+
+    <!-- cache-ref
+        缓存引用，实际上就是引用那个命名空间的缓存
+    -->
+    <cache-ref namespace="com.mapper.pojo.Cache" />
+
+    <!-- cache -->
+    <!--<cache type="com.mapper.caches.HashMapCache">-->
+        <!--<property name="name" value="testCache" />-->
+    <!--</cache>-->
+    <resultMap id="baseUserMap" type="BaseUser">
+        <!-- 构造方法注入数据，如果使用id或者result是通过setter方法注入的 -->
+        <constructor>
+            <idArg column="id" javaType="int" jdbcType="INTEGER" />
+            <arg column="name" javaType="string" jdbcType="VARCHAR" />
+        </constructor>
+
+    </resultMap>
+    
+    <resultMap id="userMap" type="User" extends="baseUserMap">
+        <id property="id" column="id" javaType="int" jdbcType="INTEGER"/>
+        <result property="createdAt" column="created_at" />
+        <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    
+    <select id="findById"
+            parameterType="int"
+            resultMap="userMap"
+            >
+        <include refid="tableAll">
+            <property name="table" value="user"/>
+        </include> WHERE  id = #{id}
+    </select>
+
+    <!-- insert操作 -->
+    <insert id="add" parameterType="User">
+        INSERT INTO user VALUES(null, #{name}, #{createdAt},#{updatedAt});
+    </insert>
+
+    <!-- update更新操作 -->
+    <update id="update" parameterType="User">
+        UPDATE user SET name=#{name},created_at=#{createdAt}, updated_at=#{updatedAt}
+        WHERE id=#{id}
+    </update>
+
+    <!-- 删除操作 -->
+    <delete id="deleteById" parameterType="int" >
+        DELETE FROM user
+        WHERE id = #{id}
+    </delete>
+
+</mapper>

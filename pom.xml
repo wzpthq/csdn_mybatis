@@ -15,6 +15,7 @@
         <module>hello-typehandler</module>
         <module>hello-plugins</module>
         <module>hello-objectfactory</module>
+        <module>hello-mapper</module>
     </modules>
 
     <dependencies>
