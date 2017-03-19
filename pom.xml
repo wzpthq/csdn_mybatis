@@ -16,6 +16,7 @@
         <module>hello-plugins</module>
         <module>hello-objectfactory</module>
         <module>hello-mapper</module>
+        <module>hello-dyncsql</module>
     </modules>
 
     <dependencies>

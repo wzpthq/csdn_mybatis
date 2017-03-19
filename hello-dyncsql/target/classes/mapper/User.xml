@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dyncsql.pojo.User">
+
+    <!-- 错误Case -->
+    <select id="findByName1" parameterType="string" resultType="User">
+        SELECT * FROM user WHERE 1 = 1
+        <if test="name != null">
+            AND name = #{name}
+        </if>
+    </select>
+    <!-- if条件判断
+        问题：parameter = string, <if test="name != null">, 会报错There is no getter for property named 'name' in 'class java.lang.String'
+        原因：是如果parameterType是普通类型，那么动态Sql控制标签需要使用_parameter表示参数；
+    -->
+    <select id="findByName2" parameterType="string" resultType="User">
+        SELECT * FROM user WHERE 1 = 1
+        <if test="_parameter != null">
+            AND name=#{name}
+        </if>
+    </select>
+
+    <!--
+        xml标签有一些特殊字符，不能使用例如：
+        例如：<, &
+    -->
+    <!--<select id="findByName3" parameterType="string" resultType="User">-->
+        <!--SELECT * FROM user-->
+        <!--WHERE 1 = 1 AND id<10-->
+        <!--<if test="_parameter != 'admin1'.toString()">-->
+             <!--AND name = #{name}-->
+        <!--</if>-->
+    <!--</select>-->
+
+    <!--
+        使用<![CDATA[]]>处理特殊字符
+    -->
+    <select id="findByName4" parameterType="string" resultType="User">
+        <![CDATA[
+        SELECT * FROM user
+        WHERE 1 = 1 AND id<10
+        ]]>
+        <if test="_parameter != 'admin1'.toString()">
+            AND name = #{name}
+        </if>
+
+    </select>
+
+    <!--
+     choose类似于switch
+    -->
+    <select id="findByName5" parameterType="string" resultType="User">
+        SELECT * FROM user WHERE 1 = 1
+        <choose>
+            <when test="_parameter == 'admin'.toString()">
+                AND <![CDATA[
+                    id < 10
+                ]]> AND name=#{name}
+            </when>
+            <when test="_parameter == 'admin1'.toString()">
+                AND id between 10 and 50 AND name=#{name}
+            </when>
+            <otherwise>
+                AND id >= 50 AND name=#{name}
+            </otherwise>
+
+        </choose>
+
+    </select>
+
+    <!-- foreach
+        collection: 要遍历的集合类型，一般list, set等
+        item: 元素变量
+        open: 开始的字符
+        close: 关闭的字符
+        separator: 分隔符
+        index: 索引变量，从0开始
+        例如：select * from user where 1=1 and id in (?,?,?,...,?)
+    -->
+    <select id="findByIds" parameterType="list" resultType="User">
+        SELECT * FROM user WHERE 1 = 1 AND id IN
+        <!-- 注意的collection表示是的集合的类型 -->
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- bind
+        <bind name="" value=""/>
+    -->
+    <select id="findLikeByName" parameterType="string" resultType="User">
+        <bind name="likePattern" value="'%' + _parameter + '%'" />
+        SELECT * FROM user
+        WHERE name like #{likePattern}
+    </select>
+
+    <!-- where for not and -->
+    <select id="findByName6" parameterType="string" resultType="User">
+        SELECT * FROM user
+        <where>
+            <if test="_parameter != null">
+                name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!-- where for and -->
+    <select id="findByName7" parameterType="string" resultType="User">
+        SELECT * FROM user
+        <where>
+            <if test="_parameter != null">
+                AND name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <!-- set -->
+    <update id="updateById" parameterType="User">
+        UPDATE user
+        <set>
+            <if test="name != null">name=#{name},</if>
+            <if test="createdAt != null">created_at=#{createdAt},</if>
+            <if test="updatedAt != null">updated_at=#{updatedAt},</if>
+        </set>
+        WHERE id=#{id}
+    </update>
+
+    <!-- trim implement where -->
+    <select id="findByName8" parameterType="string" resultType="User">
+        <!--
+            prefix: 前缀字符
+            prefixOverrides: 第一个元素去覆盖
+        -->
+        SELECT * FROM user
+        <trim prefix="WHERE" prefixOverrides="AND | OR">
+            <if test="_parameter != null">
+                AND name = #{name}
+            </if>
+        </trim>
+    </select>
+
+    <!-- trim implement set -->
+    <update id="updateById2" parameterType="User">
+        UPDATE user
+        <!-- 前面增加set，删除最后一个"," -->
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name=#{name},</if>
+            <if test="createdAt != null">created_at=#{createdAt},</if>
+            <if test="updatedAt != null">updated_at=#{updatedAt},</if>
+        </trim>
+        WHERE id=#{id}
+    </update>
+
+</mapper>

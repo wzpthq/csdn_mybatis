@@ -22,6 +22,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="hello-dyncsql" />
         <module name="hello-mapper" />
         <module name="hello-objectfactory" />
         <module name="hello-plugins" />
@@ -32,6 +33,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="csdn_mybatis" target="1.8" />
+      <module name="hello-dyncsql" target="1.8" />
       <module name="hello-mapper" target="1.8" />
       <module name="hello-objectfactory" target="1.8" />
       <module name="hello-plugins" target="1.8" />

@@ -19,3 +19,11 @@ mybatis学习和总结
 # version 1.5 
 * 功能：配置文件-ObjectFactory
 * 博客地址：http://blog.csdn.net/program_red/article/details/61621189
+
+# version 1.6
+* 功能：映射文件-mapper
+* 博客地址：http://blog.csdn.net/program_red/article/details/62227151
+
+# version 1.7
+* 功能：动态SQL
+* 博客地址：http://blog.csdn.net/program_red/article/details/63685045
